@@ -8,5 +8,4 @@ enum HttpMethod: String {
     case  PUT = "PUT";
     case  DELETE = "DELETE";
     case  PATCH = "PATCH";
-
 }
