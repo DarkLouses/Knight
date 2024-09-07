@@ -1,0 +1,27 @@
+{
+    "name": "gabrielevp/knight",
+    "description": "Framework",
+    "autoload": {
+        "psr-4": {
+            "Knight\\": "src/Knight"
+        }
+    },
+
+    "scripts": {
+        "tests": "phpunit --color=always --testdox tests/"
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Knight\\Tests\\": "tests"
+        }
+    },
+    "authors": [
+        {
+            "name": "Gabriel Enrique Vargas Perez",
+            "email": "98557334+DarkLouses@users.noreply.github.com"
+        }
+    ],
+    "require-dev": {
+        "phpunit/phpunit": "^11.3"
+    }
+}
