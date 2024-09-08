@@ -18,37 +18,41 @@ class Router
      */
     public function resolve(string $method, string $uri)
     {
-        $action = $this->routes[$method][$uri] ?? null;
-
-        if (is_null($action)) {
-            throw new HttpNotFoundException();
+        foreach ($this->routes[$method] as $route) {
+            if ($route->matches()) {
+                return $route;
+            }
         }
-
-        return $action;
+        throw new HttpNotFoundException();
     }
 
-    public function get(string $uri, callable $callback): void
+    protected function registerRoute(HttpMethod $method , string $uri, \Closure $action): void
     {
-        $this->routes[HttpMethod::GET->value][$uri] = $callback;
+        $this->routes[$method->value][] = new Route($uri, $action);
     }
 
-    public function post(string $uri, callable $callback): void
+    public function get(string $uri, \Closure $action): void
     {
-        $this->routes[HttpMethod::POST->value][$uri] = $callback;
+        $this->RegisterRoute(HttpMethod::GET, $uri, $action);
     }
 
-    public function put(string $uri, callable $callback): void
+    public function post(string $uri, \Closure $action): void
     {
-        $this->routes[HttpMethod::PUT->value][$uri] = $callback;
+        $this->RegisterRoute(HttpMethod::POST, $uri, $action);
     }
 
-    public function delete(string $uri, callable $callback): void
+    public function put(string $uri, \Closure $action): void
     {
-        $this->routes[HttpMethod::DELETE->value][$uri] = $callback;
+        $this->RegisterRoute(HttpMethod::PUT, $uri, $action);
     }
 
-    public function patch(string $uri, callable $callback): void
+    public function delete(string $uri, \Closure $action): void
     {
-        $this->routes[HttpMethod::PATCH->value][$uri] = $callback;
+        $this->RegisterRoute(HttpMethod::DELETE, $uri, $action);
+    }
+
+    public function patch(string $uri, \Closure $action): void
+    {
+        $this->RegisterRoute(HttpMethod::PATCH, $uri, $action);
     }
 }
