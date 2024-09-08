@@ -19,7 +19,7 @@ class Router
     public function resolve(string $method, string $uri)
     {
         foreach ($this->routes[$method] as $route) {
-            if ($route->matches()) {
+            if ($route->matches($uri)) {
                 return $route;
             }
         }

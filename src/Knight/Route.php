@@ -13,7 +13,7 @@ class Route
     {
         $this->uri = $uri;
         $this->action = $action;
-        $this->regex = preg_replace('/\{([a-zAZ])}/', '\[a-zA-Z0-9]/', $uri);
+        $this->regex = preg_replace('/\{([a-zA-Z0-9]+)}/', '([a-zA-Z0-9]+)', $uri);
         preg_match_all('/\{([a-zA-Z0-9]+)}/', $uri, $parameters);
         $this->parameters = $parameters[1];
     }
@@ -28,7 +28,7 @@ class Route
         return $this->action;
     }
 
-    function regex(): array|string|null
+    function regex(): string
     {
         return $this->regex;
     }
@@ -38,9 +38,9 @@ class Route
         return $this->parameters;
     }
 
-    public function matches(): bool
+    public function matches(string $uri): bool
     {
-        return preg_match("#^$this->regex$#", $this->uri);
+        return preg_match("#^$this->regex/?$#", $uri) === 1;
     }
 
     public function hasParameters(): bool
@@ -51,7 +51,8 @@ class Route
     public function parseParameters(string $uri): array
     {
         preg_match("#^$this->regex$#", $uri, $arguments);
+        array_shift($arguments);
 
-        return array_combine($this->parameters, array_slice($arguments, 1));
+        return array_combine($this->parameters, $arguments);
     }
 }
