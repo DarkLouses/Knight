@@ -11,19 +11,15 @@ use Knight\Server\PhpNativeServer;
 $router = new Router();
 
 $router->get('/test', function (Request $request) {
-	$response = new Response();
-	$response->setHeader('Content-Type', 'text/plain');
-	$response->setContent(json_encode(['message' => 'Router get']));
-
-	return $response;
+	return Response::json(['message' => 'Router get']);
 });
 
 $router->post('/test', function (Request $request) {
-	$response = new Response();
-	$response->setHeader('Content-Type', 'text/plain');
-	$response->setContent(json_encode(['message' => 'Router post']));
+	return Response::json(['message' => 'Router post']);
+});
 
-	return $response;
+$router->get('/redirect', function (Request $request) {
+	return Response::redirect('/test');
 });
 
 $server = new PhpNativeServer();
@@ -36,10 +32,6 @@ try {
 
 	$server->sendResponse($response);
 } catch (HttpNotFoundException $e) {
-    $response = new Response();
-	$response->setStatus(404);
-	$response->setHeader('Content-Type', 'text/plain');
-	$response->setContent(json_encode(['message' => 'Not found']));
-
+	$response = Response::text('Not found')->setStatus(404);
 	$server->sendResponse($response);
 }
