@@ -16,10 +16,10 @@ class Router
     /**
      * @throws HttpNotFoundException
      */
-    public function resolve(string $method, string $uri)
+    public function resolve(Request $request)
     {
-        foreach ($this->routes[$method] as $route) {
-            if ($route->matches($uri)) {
+        foreach ($this->routes[$request->method()->value] as $route) {
+            if ($route->matches($request->uri())) {
                 return $route;
             }
         }

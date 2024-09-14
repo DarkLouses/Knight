@@ -4,6 +4,7 @@ namespace Knight\Tests;
 
 use Knight\HttpMethod;
 use Knight\HttpNotFoundException;
+use Knight\Request;
 use Knight\Router;
 use PHPUnit\Framework\TestCase;
 
@@ -44,7 +45,7 @@ class RouterTest extends TestCase
         }
 
         foreach ($routes as $uri => $action) {
-            $route = $router->resolve(HttpMethod::GET->value, $uri);
+            $route = $router->resolve(new Request(new MockServer($uri , HttpMethod::GET)));
             $this->assertEquals($uri, $route->uri());
             $this->assertEquals($action, $route->action());
         }
@@ -73,7 +74,7 @@ class RouterTest extends TestCase
         }
 
         foreach ($routes as [$method, $uri, $action]) {
-            $route = $router->resolve($method->value, $uri);
+	        $route = $router->resolve(new Request(new MockServer($uri , $method)));
             $this->assertEquals($uri, $route->uri());
             $this->assertEquals($action, $route->action());
         }

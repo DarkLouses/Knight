@@ -3,7 +3,9 @@
 require_once '../vendor/autoload.php';
 
 use Knight\HttpNotFoundException;
+use Knight\Request;
 use Knight\Router;
+use Knight\PhpNativeServer;
 
 $router = new Router();
 
@@ -16,9 +18,7 @@ $router->post('/test', function () {
 });
 
 try {
-    $method = $_SERVER['REQUEST_METHOD'];
-    $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH); // Normalize URI
-    $action = $router->resolve($method, $uri);
+    $action = $router->resolve(new Request(new PhpNativeServer()));
     $action = $action->action();
     print($action());
 } catch (HttpNotFoundException $e) {
