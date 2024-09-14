@@ -1,6 +1,6 @@
 <?php
 
-namespace Knight;
+namespace Knight\Http;
 
 enum HttpMethod: String {
     case  GET = "GET";

@@ -1,6 +1,6 @@
 <?php
 
-namespace Knight;
+namespace Knight\Routing;
 
 class Route
 {

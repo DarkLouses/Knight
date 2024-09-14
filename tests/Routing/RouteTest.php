@@ -1,8 +1,8 @@
 <?php
 
-namespace Knight\Tests;
+namespace Knight\Tests\Routing;
 
-use Knight\Route;
+use Knight\Routing\Route;
 use PHPUnit\Framework\TestCase;
 
 class RouteTest extends TestCase

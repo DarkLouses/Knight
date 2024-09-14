@@ -2,10 +2,10 @@
 
 require_once '../vendor/autoload.php';
 
-use Knight\HttpNotFoundException;
-use Knight\Request;
-use Knight\Router;
-use Knight\PhpNativeServer;
+use Knight\Http\HttpNotFoundException;
+use Knight\Http\Request;
+use Knight\Routing\Router;
+use Knight\Server\PhpNativeServer;
 
 $router = new Router();
 

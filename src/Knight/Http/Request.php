@@ -1,6 +1,8 @@
 <?php
 
-namespace Knight;
+namespace Knight\Http;
+
+use Knight\Server\Server;
 
 class Request
 {

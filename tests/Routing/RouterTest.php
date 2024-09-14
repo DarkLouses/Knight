@@ -1,11 +1,11 @@
 <?php
 
-namespace Knight\Tests;
+namespace Knight\Tests\Routing;
 
-use Knight\HttpMethod;
-use Knight\HttpNotFoundException;
-use Knight\Request;
-use Knight\Router;
+use Knight\Http\HttpMethod;
+use Knight\Http\HttpNotFoundException;
+use Knight\Http\Request;
+use Knight\Routing\Router;
 use PHPUnit\Framework\TestCase;
 
 class RouterTest extends TestCase
@@ -21,7 +21,7 @@ class RouterTest extends TestCase
         $router = new Router();
         $router->get($uri, $action);
 
-        $route = $router->resolve(HttpMethod::GET->value, $uri);
+	    $route = $router->resolve(new Request(new MockServer($uri , HttpMethod::GET)));
         $this->assertEquals($uri, $route->uri());
         $this->assertEquals($action, $route->action());
     }

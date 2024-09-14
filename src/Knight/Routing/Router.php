@@ -1,6 +1,10 @@
 <?php
 
-namespace Knight;
+namespace Knight\Routing;
+
+use Knight\Http\HttpMethod;
+use Knight\Http\HttpNotFoundException;
+use Knight\Http\Request;
 
 class Router
 {

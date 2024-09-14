@@ -1,9 +1,9 @@
 <?php
 
-namespace Knight\Tests;
+namespace Knight\Tests\Routing;
 
-use Knight\HttpMethod;
-use Knight\Server;
+use Knight\Http\HttpMethod;
+use Knight\Server\Server;
 
 class MockServer implements Server
 {

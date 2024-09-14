@@ -1,6 +1,8 @@
 <?php
 
-namespace Knight;
+namespace Knight\Server;
+
+use Knight\Http\HttpMethod;
 
 interface Server
 {
