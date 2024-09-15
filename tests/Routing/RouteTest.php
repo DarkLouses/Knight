@@ -5,8 +5,18 @@ namespace Knight\Tests\Routing;
 use Knight\Routing\Route;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * Class RouteTest
+ *
+ * This class contains unit tests for the Route class.
+ */
 class RouteTest extends TestCase
 {
+    /**
+     * Provides routes with no parameters for testing.
+     *
+     * @return array An array of routes with no parameters.
+     */
     public static function routesWithNoParameters(): array
     {
         return [
@@ -17,7 +27,10 @@ class RouteTest extends TestCase
     }
 
     /**
+     * Test regex matching for routes with no parameters.
+     *
      * @dataProvider routesWithNoParameters
+     * @param string $uri The URI to test.
      */
     public function testRegexWithNoParameters(string $uri)
     {
@@ -28,7 +41,10 @@ class RouteTest extends TestCase
     }
 
     /**
+     * Test regex matching for URIs that end with parameters.
+     *
      * @dataProvider routesWithNoParameters
+     * @param string $uri The URI to test.
      */
     public function testRegexOnUriThatEndsWithParameters(string $uri)
     {
@@ -36,6 +52,11 @@ class RouteTest extends TestCase
         $this->assertTrue($route->matches("$uri/"));
     }
 
+    /**
+     * Provides routes with parameters for testing.
+     *
+     * @return array An array of routes with parameters.
+     */
     public static function routesWithParameters(): array
     {
         return [
@@ -45,7 +66,12 @@ class RouteTest extends TestCase
     }
 
     /**
+     * Test regex matching for routes with parameters.
+     *
      * @dataProvider routesWithParameters
+     * @param string $uri The URI pattern.
+     * @param string $testUri The URI to test.
+     * @param array $parameters The expected parameters.
      */
     public function testRegexWithParameters(string $uri, string $testUri, array $parameters)
     {
@@ -54,7 +80,12 @@ class RouteTest extends TestCase
     }
 
     /**
+     * Test parsing parameters from URIs.
+     *
      * @dataProvider routesWithParameters
+     * @param string $uri The URI pattern.
+     * @param string $testUri The URI to test.
+     * @param array $parameters The expected parameters.
      */
     public function testParseParameters(string $uri, string $testUri, array $parameters)
     {

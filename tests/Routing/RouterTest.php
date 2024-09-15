@@ -8,11 +8,18 @@ use Knight\Http\Request;
 use Knight\Routing\Router;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * Class RouterTest
+ *
+ * This class contains unit tests for the Router class.
+ */
 class RouterTest extends TestCase
 {
 
     /**
-     * @throws HttpNotFoundException
+     * Test resolving a basic route with a callback action.
+     *
+     * @throws HttpNotFoundException If the route is not found.
      */
     public function testResolveBasicRouteWithCallbackAction()
     {
@@ -21,13 +28,15 @@ class RouterTest extends TestCase
         $router = new Router();
         $router->get($uri, $action);
 
-	    $route = $router->resolve(new Request(new MockServer($uri , HttpMethod::GET)));
+        $route = $router->resolve(new Request(new MockServer($uri , HttpMethod::GET)));
         $this->assertEquals($uri, $route->uri());
         $this->assertEquals($action, $route->action());
     }
 
     /**
-     * @throws HttpNotFoundException
+     * Test resolving multiple basic routes with callback actions.
+     *
+     * @throws HttpNotFoundException If any of the routes are not found.
      */
     public function testResolveMultipleBasicRoutesWithCallbackAction()
     {
@@ -52,7 +61,9 @@ class RouterTest extends TestCase
     }
 
     /**
-     * @throws HttpNotFoundException
+     * Test resolving multiple basic routes with callback actions for different HTTP methods.
+     *
+     * @throws HttpNotFoundException If any of the routes are not found.
      */
     public function testResolveMultipleBasicRoutesWithCallbackActionForDifferent()
     {
@@ -74,7 +85,7 @@ class RouterTest extends TestCase
         }
 
         foreach ($routes as [$method, $uri, $action]) {
-	        $route = $router->resolve(new Request(new MockServer($uri , $method)));
+            $route = $router->resolve(new Request(new MockServer($uri , $method)));
             $this->assertEquals($uri, $route->uri());
             $this->assertEquals($action, $route->action());
         }

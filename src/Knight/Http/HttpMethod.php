@@ -2,10 +2,32 @@
 
 namespace Knight\Http;
 
+/**
+ * Enum representing HTTP methods.
+ */
 enum HttpMethod: String {
-    case  GET = "GET";
-    case  POST = "POST";
-    case  PUT = "PUT";
-    case  DELETE = "DELETE";
-    case  PATCH = "PATCH";
+    /**
+     * HTTP GET method.
+     */
+    case GET = "GET";
+
+    /**
+     * HTTP POST method.
+     */
+    case POST = "POST";
+
+    /**
+     * HTTP PUT method.
+     */
+    case PUT = "PUT";
+
+    /**
+     * HTTP DELETE method.
+     */
+    case DELETE = "DELETE";
+
+    /**
+     * HTTP PATCH method.
+     */
+    case PATCH = "PATCH";
 }
