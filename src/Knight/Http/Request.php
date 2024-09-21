@@ -2,6 +2,7 @@
 
 namespace Knight\Http;
 
+use Knight\Routing\Route;
 use Knight\Server\Server;
 
 /**
@@ -15,6 +16,13 @@ class Request
      * @var string
      */
     protected string $uri;
+
+    /**
+     * The route of the request.
+     *
+     * @var Route
+     */
+    protected Route $route;
 
     /**
      * The HTTP method of the request.
@@ -38,19 +46,6 @@ class Request
     protected array $query;
 
     /**
-     * Request constructor.
-     *
-     * @param Server $server The server instance providing request data.
-     */
-    public function __construct(Server $server)
-    {
-        $this->uri = $server->requestUri();
-        $this->method = $server->requestMethod();
-        $this->data = $server->postData();
-        $this->query = $server->queryParams();
-    }
-
-    /**
      * Get the URI of the request.
      *
      * @return string The request URI.
@@ -58,6 +53,40 @@ class Request
     public function uri(): string
     {
         return $this->uri;
+    }
+
+    /**
+     * Set the URI of the request.
+     *
+     * @param string $uri The new URI.
+     * @return self
+     */
+    public function setUri(string $uri): self
+    {
+        $this->uri = $uri;
+        return $this;
+    }
+
+    /**
+     * Get the route of the request.
+     *
+     * @return Route The request route.
+     */
+    public function route(): Route
+    {
+        return $this->route;
+    }
+
+    /**
+     * Set the route of the request.
+     *
+     * @param Route $route The new route.
+     * @return self
+     */
+    public function setRoute(Route $route): self
+    {
+        $this->route = $route;
+        return $this;
     }
 
     /**
@@ -71,22 +100,81 @@ class Request
     }
 
     /**
-     * Get the POST data of the request.
+     * Set the HTTP method of the request.
      *
-     * @return array The POST data.
+     * @param HttpMethod $method The new method.
+     * @return self
      */
-    public function data(): array
+    public function setMethod(HttpMethod $method): self
     {
-        return $this->data;
+        $this->method = $method;
+        return $this;
+    }
+
+	/**
+	 * Get the POST data of the request.
+	 *
+	 * @param string|null $key
+	 * @return array|mixed|null
+	 */
+    public function data(?string $key = null): mixed
+    {
+        if ($key !== null) {
+			return $this->data[$key] ?? null;
+		}
+		return $this->data;
     }
 
     /**
-     * Get the query parameters of the request.
+     * Set the POST data of the request.
      *
-     * @return array The query parameters.
+     * @param array $data The new POST data.
+     * @return self
      */
-    public function query(): array
+    public function setPostData(array $data): self
     {
-        return $this->query;
+        $this->data = $data;
+        return $this;
     }
+
+	/**
+	 * Get the query parameters of the request.
+	 *
+	 * @param string|null $key
+	 * @return array|null The query parameters.
+	 */
+    public function query(?string $key = null): mixed
+	{
+		if ($key !== null) {
+			return $this->query[$key] ?? null;
+		}
+		return $this->query;
+	}
+
+    /**
+     * Set the query parameters of the request.
+     *
+     * @param array $query The new query parameters.
+     * @return self
+     */
+    public function setQueryParameters(array $query): self
+    {
+        $this->query = $query;
+        return $this;
+    }
+
+    /**
+     * Get the route parameters.
+     *
+     * @param string|null $key The parameter key (optional).
+     * @return array|mixed|null
+     */
+	public function routerParameters(?string $key = null): mixed
+	{
+		$parameters = $this->route->parseParameters($this->uri);
+		if ($key !== null) {
+			return $parameters[$key] ?? null;
+		}
+		return $parameters;
+	}
 }

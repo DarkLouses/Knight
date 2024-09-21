@@ -10,12 +10,12 @@ use Knight\Server\PhpNativeServer;
 
 $router = new Router();
 
-$router->get('/test', function (Request $request) {
-	return Response::json(['message' => 'Router get']);
+$router->get('/test/{param}', function (Request $request) {
+	return Response::json($request->routerParameters());
 });
 
 $router->post('/test', function (Request $request) {
-	return Response::json(['message' => 'Router post']);
+	return Response::json($request->data());
 });
 
 $router->get('/redirect', function (Request $request) {
@@ -25,8 +25,9 @@ $router->get('/redirect', function (Request $request) {
 $server = new PhpNativeServer();
 
 try {
-	$request = new Request($server);
+	$request = $server->getRequest();
     $route = $router->resolve($request);
+	$request->setRoute($route);
     $action = $route->action();
 	$response = $action($request);
 

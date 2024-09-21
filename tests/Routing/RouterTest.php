@@ -6,6 +6,7 @@ use Knight\Http\HttpMethod;
 use Knight\Http\HttpNotFoundException;
 use Knight\Http\Request;
 use Knight\Routing\Router;
+use Knight\Tests\MockServer;
 use PHPUnit\Framework\TestCase;
 
 /**
