@@ -45,6 +45,9 @@ class Request
      */
     protected array $query;
 
+	protected array $headers = [];
+
+
     /**
      * Get the URI of the request.
      *
@@ -162,6 +165,28 @@ class Request
         $this->query = $query;
         return $this;
     }
+
+	public function headers(?string $key = null): mixed
+	{
+		if ($key !== null) {
+			return $this->headers[$key] ?? null;
+		}
+		return $this->headers;
+	}
+
+	/**
+	 * Set the headers of the request.
+	 *
+	 * @param array $headers The new headers.
+	 * @return self
+	 */
+	public function setHeaders(array $headers): self
+	{
+		foreach ($headers as $key => $value) {
+			$this->headers[strtolower($key)] = $value;
+		}
+		return $this;
+	}
 
     /**
      * Get the route parameters.

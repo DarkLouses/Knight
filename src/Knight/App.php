@@ -29,11 +29,7 @@ class App
 		public function run(): void
 		{
 			try {
-				$route = $this->router->resolve($this->request);
-				$this->request->setRoute($route);
-				$action = $route->action();
-				$response = $action($this->request);
-
+				$response = $this->router->resolve($this->request);
 				$this->server->sendResponse($response);
 			} catch (HttpNotFoundException $e) {
 				$response = Response::text('Not found')->setStatus(404);

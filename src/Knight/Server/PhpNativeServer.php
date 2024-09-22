@@ -26,6 +26,7 @@ class PhpNativeServer implements Server
             ->setUri($_SERVER['REQUEST_URI'])
             ->setMethod(HttpMethod::from($_SERVER['REQUEST_METHOD']))
             ->setPostData($_POST)
+	        ->setHeaders(getallheaders())
             ->setQueryParameters($_GET);
     }
 
